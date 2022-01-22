@@ -36,10 +36,13 @@ RSpec.describe Company, type: :model do
       3.times { FactoryBot.create(:user, company: subject) }
       subject.roles.delete_all
       expect(subject.roles).to be_empty
+      subject.sync_users_job_titles_to_roles
+      expect(subject.roles).not_to be_empty
     end
 
     it 'has users with company roles' do
       3.times { FactoryBot.create(:user, company: subject) }
+      subject.sync_users_job_titles_to_roles
       expect(subject.roles).not_to be_empty
     end
   end
@@ -49,10 +52,13 @@ RSpec.describe Company, type: :model do
       3.times { FactoryBot.create(:team, company: subject) }
       subject.roles.delete_all
       expect(subject.roles).to be_empty
+      subject.sync_team_name_to_roles
+      expect(subject.roles).not_to be_empty
     end
 
     it 'has teams with company roles' do
       3.times { FactoryBot.create(:team, company: subject) }
+      subject.sync_team_name_to_roles
       expect(subject.roles).not_to be_empty
     end
   end
